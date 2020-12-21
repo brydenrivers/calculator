@@ -1,0 +1,25 @@
+/**
+Calculator
+**/
+*{
+    box-sizing: border-box;
+}
+.container{
+    width: 400px;
+    margin: auto;
+    background-color: aqua;
+}
+.buttons{
+    display: flex;
+    flex-wrap: wrap;
+}
+.btn{
+    width: 25%;
+    padding: 20px;
+    font-size: 1.5rem;
+    border-radius: 3px;
+    border:1px solid rgba(0, 0, 0, 0.466);
+}
+.btn:last-child{
+    flex-grow: 2;
+}
