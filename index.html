@@ -10,35 +10,122 @@
     <h1>Calculator</h1>
     <div class="container">
         <div class="display">
-            <input type="text" value="display" id="display">
+            <input type="text" value="" id="display">
 
         </div>
         <div class="buttons">
             <button class="btn" id="c">c</button>
-            <button class="btn" id="plusMinus">+/-</button>
-            <button class="btn" id="percentage">%</button>
-            <button class="btn" id="division">/</button>
+            <button class="btn operand" id="plusMinus">+/-</button>
+            <button class="btn operand" id="percentage">%</button>
+            <button class="btn operand" id="divide">/</button>
             <button class="btn" id="7" value="7">7</button>
             <button class="btn" id="8" value="8">8</button>
             <button class="btn" id="9" value="9">9</button>
-            <button class="btn" id="multi">X</button>
+            <button class="btn operand" id="multiply">X</button>
             <button class="btn" id="4" value="4">4</button>
             <button class="btn" id="5" value="5">5</button>
             <button class="btn" id="6" value="6">6</button>
-            <button class="btn" id="minus">-</button>
+            <button class="btn operand" id="subtract">-</button>
             <button class="btn" id="1" value="1">1</button>
             <button class="btn" id="2" value="2">2</button>
             <button class="btn" id="3" value="3">3</button>
-            <button class="btn" id="add">+</button>
+            <button class="btn operand" id="add">+</button>
             <button class="btn" id="0" value="0">0</button>
             <button class="btn" id="period" value="period">.</button>
-            <button class="btn" id="equal">=</button>
+            <button class="btn operand" id="equal">=</button>
 
         </div>
-
-
-
     </div>
+    <script>
+        function add(a, b) {
+            return a+b;
+        }
+        function subtract(a, b) {
+            return a-b
+        }
+        function multiply(a, b) {
+            return a*b
+        }
+        function divide(a, b) {
+            return a/b
+        }
+        function operate(a, b, operand) {
+            if(operand=='add'){
+                return add(a, b)
+            }
+            else if(operand=='subtract'){
+                return subtract(a, b)
+            }
+            else if(operand=='multiply'){
+                return multiply(a, b)
+            }
+            else if(operand=='divide'){
+                return divide(a, b)
+            }
+        }
+        let operand='';
+        let num1;
+        let num2;
+        let displayScreen=''
+        window.addEventListener('click', function (e) {
+            newVal=e.target.id;
+            console.log(typeof(e.target.value))
+            const display = document.querySelector('#display')
+            // display.value+=newVal;
+
+            // display.value = displayScreen;
+            function cal() {
+                if (e.target.id=='equal'){
+                num2=display.value
+                console.log(display.value)
+                console.log(num2+' num2 equal')
+                console.log(num1+' num1 equeal')
+                console.log(operand + ' operator')
+                display.value = operate(Number(num1), Number(num2), operand)
+
+                }
+                else if (e.target.id=='add' || e.target.id == 'subtract' || e.target.id=='add' || e.target.id == 'multiply' || e.target.id == 'divide'){
+                    num1=display.value;
+                    display.value ='';
+                    operand=e.target.id
+                    console.log(num1 +' mynum1')
+
+
+                }
+                else{
+                    display.value = keyDown(newVal)
+                    console.log(displayScreen)
+                }
+
+            }
+
+            function keyDown(key) {
+
+                if(key=='add' || key == 'substract' || key=='add' || key == 'multiply' || key == 'divide'){
+                    operand = key;
+                    num1=variable;
+
+                    console.log(operand)
+                    console.log(num1 +' num1 varuable returning')
+                    console.log(variable + ' variable returning')
+                    return variable
+
+                }
+                variable=display.value+newVal;
+                console.log(num1 +' num1 varuable returning')
+                console.log(variable + ' variable returning')
+                return variable
+            }
+            cal();
+
+
+        })
+        keyDown= document.querySelectorAll('#btn')
+
+
+
+
+    </script>
 
 </body>
 </html>
