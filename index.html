@@ -67,31 +67,18 @@
                 return divide(a, b)
             }
         }
-
-        /*CALC*/
-
-        function calc(e) {
-            if(e.target.id == 'c'){
-                lastKey='';
-                operand='';
-                num1='';
-                displayRes=[0];
-                display.value=displayRes.join('');
-                console.log(display.value + 'C was pressed and this si the value')
-
-
-
-            }
-            else if(e.target.id=='equal'||lastKey=='notOperand'){
-
-
-                if(e.target.id=='equal'){
+        function equals(e) {
+            if(e.target.id=='equal'){
                     lastKey='';
                     console.log('equals was pressed')
                     num2=display.value;
                     display.value = operate(Number(num1), Number(num2), operand);
+                    displayRes=[];
+                    go='noGo';
                     console.log('read numb1 is '+ num1 )
                     console.log('log 3 operation is ' + num1 + ' ' + operand + ' ' +num2)
+                    console.log('equals executed numb1 is ' + num1 + ' numb2 is ' + num2)
+
 
                 }
                 else{
@@ -104,18 +91,68 @@
                     operand=e.target.id
                     console.log('read numb1 is '+ num1 )
                     console.log('log 4 operation is ' + num1 + ' ' + operand + ' ' +num2)
-
-
                 }
+
+        }
+        /*Period was presed*/
+        function periodPressed(e) {
+
+
+            if(displayRes.includes('.')){
+                console.log('a second period was presed')
+            }
+            else if(displayRes.length <1 ){
+                console.log('no number before period')
+                displayRes.push('0');
+                displayRes.push(e.target.value);
+                display.value=displayRes.join('');
+            }
+
+            else{
+                displayRes.push(e.target.value);
+                display.value=displayRes.join('');
+                console.log(display.value + " first period pressed")
+            }
+
+
+        }
+        /*-----*/
+
+        /*CALC*/
+
+        function calc(e) {
+            if(e.target.id == 'c'){
+                lastKey='';
+                operand='';
+                num1='';
+                displayRes=[0];
+                display.value=displayRes.join('');
+                console.log(display.value + 'C was pressed and this si the value')
+
+            }
+            else if(e.target.id=='equal'||lastKey=='notOperand'){
+
+                equals(e);
 
             }
             else if(e.target.classList.contains('operand')){
+                if(lastKey=='operand'){
+                    lastKey='notOperand'
+                    go='noGo'
+                    equals(e);
 
-                lastKey='operand';
-                operand=e.target.id
-                num1=display.value;
-                console.log('log 1 operand is ' + operand + ' num in memory is ' + num1)
-                // display.value=display.value;
+                }
+                else{
+                    go='noGo'
+                    lastKey='operand';
+                    operand=e.target.id
+                    num1=display.value;
+                    console.log('log 1 operand is ' + operand + ' num in memory is ' + num1)
+                    // display.value=display.value;
+
+                }
+
+
             }
             else if(lastKey=="notOperand"){
                 // operand=e.target.id
@@ -128,27 +165,80 @@
 
             }
             else if(lastKey=="operand"){
-                lastKey='notOperand'
-
-                displayRes=[e.target.value]
-                display.value=displayRes.join('');
-
-                console.log(lastKey + ' i happened' + ' numb1 is ' + num1)
-                return
 
 
-            }
-            else{
-                if(displayRes[0]=='0'){
-                    displayRes[0]=(e.target.value)
+                if(go=='go'){
+                    displayRes.push(e.target.value);
                     display.value=displayRes.join('');
                 }
                 else{
-                    console.log(e.target.value)
-                    // display.value+=e.target.value
-                    displayRes.push(e.target.value)
-                    display.value=displayRes.join('');
-                    console.log(display.value + " display value")
+
+                    go='go'
+                    if(e.target.value =='.'){
+                        console.log('no number before period after operand')
+                        displayRes=['0'];
+                        displayRes.push(e.target.value);
+                        display.value=displayRes.join('')
+
+                    }
+                    else{
+                        displayRes=[e.target.value]
+                        display.value=displayRes.join('');
+
+                        console.log(lastKey + ' i happened' + ' numb1 is ' + num1)
+
+                    }
+
+
+
+                }
+
+            }
+            else{
+                if(displayRes[0]=='0'&& displayRes[1]!='.'){
+                    if(e.target.value =='.'){
+
+                        displayRes.push(e.target.value);
+                        display.value=displayRes.join('');
+
+                    }
+                    else{
+                        displayRes[0]=(e.target.value)
+                        display.value=displayRes.join('');
+                        console.log('did this work?')
+                    }
+
+                }
+                // else if(e.target.value =='.'){
+                //     if
+                // }
+                else{
+                    if(e.target.value =='.'){
+                        if(displayRes.includes('.')){
+                            console.log('a second period was presed')
+                        }
+                        else if(displayRes.length <1 ){
+                            console.log('no number before period')
+                            displayRes.push('0');
+                            displayRes.push(e.target.value);
+                            display.value=displayRes.join('');
+                        }
+
+                        else{
+                            displayRes.push(e.target.value);
+                            display.value=displayRes.join('');
+                            console.log(display.value + " first period pressed")
+                        }
+                    }
+                    else{
+                        console.log(e.target.value)
+                        // display.value+=e.target.value
+                        displayRes.push(e.target.value)
+                        display.value=displayRes.join('');
+                        console.log(display.value + " display value")
+
+                    }
+
 
                 }
 
@@ -166,7 +256,8 @@
         let operand='';
         let num1;
         let clear=false;
-        // Todo: finish all period functions and ussage. Complete percentage functions and usage. Decide if I want to implement the +/- button
+        let go='noGo';
+        // Complete percentage functions and usage. Implement a max number lenght Decide if I want to implement the +/- button
 
 
 
