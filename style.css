@@ -49,7 +49,7 @@ input{
     background-color:#ffff8fc2;
 
 }
-.operand, #c{
+.operand, #c, #plusMinus{
     background-color: #f96d6d;
 }
 .operand:focus, #c:focus{

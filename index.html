@@ -16,7 +16,7 @@
             </div>
             <div class="buttons">
                 <button class="btn" id="c">c</button>
-                <button class="btn operand" id="plusMinus">+/-</button>
+                <button class="btn" id="plusMinus" value="-">+/-</button>
                 <button class="btn operand" id="percentage">%</button>
                 <button class="btn operand" id="divide">/</button>
                 <button class="btn" id="7" value="7">7</button>
@@ -108,6 +108,7 @@
                 display.value=displayRes.join('');
             }
 
+
             else{
                 displayRes.push(e.target.value);
                 display.value=displayRes.join('');
@@ -168,8 +169,24 @@
 
 
                 if(go=='go'){
-                    displayRes.push(e.target.value);
-                    display.value=displayRes.join('');
+                    if(e.target.id=='plusMinus'){
+                        if(displayRes.includes('-')){
+                            console.log('second minus')
+                        }
+                        else{
+                            displayRes.unshift(e.target.value);
+                            display.value=displayRes.join('');
+
+                        }
+
+                    }
+                    else{
+                        displayRes.push(e.target.value);
+                        display.value=displayRes.join('');
+                        console.log('I am happening right now')
+
+                    }
+
                 }
                 else{
 
@@ -230,6 +247,21 @@
                             console.log(display.value + " first period pressed")
                         }
                     }
+                    else if(e.target.id=='plusMinus'){
+                        if(displayRes.includes('-')){
+                            console.log('second minus')
+                        }
+                        else{
+                            displayRes.unshift(e.target.value);
+                            display.value=displayRes.join('');
+
+                        }
+
+
+
+                        console.log('plus and minus')
+
+                    }
                     else{
                         console.log(e.target.value)
                         // display.value+=e.target.value
@@ -257,7 +289,7 @@
         let num1;
         let clear=false;
         let go='noGo';
-        // Complete percentage functions and usage. Implement a max number lenght Decide if I want to implement the +/- button
+        // Complete percentage functions and usage. Implement a max number lenght (DONE Decide if I want to implement the +/- button) implement delete last number buttom| After all is done, MAKE CODE DRY
 
 
 
