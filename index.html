@@ -8,7 +8,7 @@
 </head>
 <body>
     <section>
-        <h1>Calculator</h1>
+        <h1></h1>
         <div class="container">
             <div class="display">
                 <input type="text" value="" id="display" disabled= 'disabled'>
@@ -17,7 +17,7 @@
             <div class="buttons">
                 <button class="btn" id="c">c</button>
                 <button class="btn" id="plusMinus" value="-">+/-</button>
-                <button class="btn operand" id="percentage">%</button>
+                <button class="btn " id="percentage">%</button>
                 <button class="btn operand" id="divide">/</button>
                 <button class="btn" id="7" value="7">7</button>
                 <button class="btn" id="8" value="8">8</button>
@@ -33,6 +33,7 @@
                 <button class="btn operand" id="add">+</button>
                 <button class="btn" id="0" value="0">0</button>
                 <button class="btn" id="." value=".">.</button>
+                <button class="btn back-icon"  ><i class="material-icons" id="backSpace">backspace</i></button>
                 <button class="btn operand" id="equal">=</button>
 
             </div>
@@ -53,18 +54,39 @@
         function divide(a, b) {
             return a/b
         }
+        function percentage(a) {
+            if(operand!='add'&& operand!='subtract'){
+                console.log('me me' + operand)
+                return display.value/100;
+
+            }
+            else{
+                console.log('yo yo')
+                return display.value/100*num1;
+
+            }
+
+        }
         function operate(a, b, operand) {
             if(operand=='add'){
-                return add(a, b)
+                result= add(a, b)
             }
             else if(operand=='subtract'){
-                return subtract(a, b)
+                result= subtract(a, b)
             }
             else if(operand=='multiply'){
-                return multiply(a, b)
+                result= multiply(a, b)
             }
             else if(operand=='divide'){
-                return divide(a, b)
+                result= divide(a, b)
+            }
+            result=result.toString()
+            if (result.length>10){
+                console.log('result got sliced')
+                return result.slice(0, 11)
+            }
+            else{
+                return result;
             }
         }
         function equals(e) {
@@ -72,6 +94,8 @@
                     lastKey='';
                     console.log('equals was pressed')
                     num2=display.value;
+                    // ans = operate(Number(num1), Number(num2), operand);
+
                     display.value = operate(Number(num1), Number(num2), operand);
                     displayRes=[];
                     go='noGo';
@@ -104,20 +128,40 @@
             else if(displayRes.length <1 ){
                 console.log('no number before period')
                 displayRes.push('0');
-                displayRes.push(e.target.value);
-                display.value=displayRes.join('');
+                updateScreen(e)
             }
 
 
             else{
-                displayRes.push(e.target.value);
-                display.value=displayRes.join('');
+                updateScreen(e)
                 console.log(display.value + " first period pressed")
             }
 
 
         }
         /*-----*/
+        /*======*/
+        function updateScreen(e) {
+            if(displayRes.length <10){
+
+                console.log(e.target.value)
+                // display.value+=e.target.value
+                displayRes.push(e.target.value)
+                display.value=displayRes.join('');
+                console.log(display.value + " display value")
+
+            }
+
+        }
+        /*======*/
+        function backSpace() {
+                console.log(displayRes+' before')
+                displayRes.pop()
+                console.log(displayRes + ' after')
+                display.value=displayRes.join('');
+        }
+        /*======*/
+
 
         /*CALC*/
 
@@ -129,6 +173,11 @@
                 displayRes=[0];
                 display.value=displayRes.join('');
                 console.log(display.value + 'C was pressed and this si the value')
+
+            }
+            else if(e.target.id == 'backSpace'){
+                console.log('poping')
+                backSpace();
 
             }
             else if(e.target.id=='equal'||lastKey=='notOperand'){
@@ -155,20 +204,18 @@
 
 
             }
-            else if(lastKey=="notOperand"){
-                // operand=e.target.id
-                // this code dos not get executed
 
-                num1=display.value;
-                displayRes=[e.target.value]
-                display.value=displayRes.join('');
-                console.log('log 2 operand is ' + operand + ' num in memory is ' + num1)
-
-            }
             else if(lastKey=="operand"){
+                if(e.target.id=='percentage'){
+                    displayRes=[percentage(display.value)]
+                    display.value=displayRes.join('');
 
 
-                if(go=='go'){
+                }
+
+
+
+                else if(go=='go'){
                     if(e.target.id=='plusMinus'){
                         if(displayRes.includes('-')){
                             console.log('second minus')
@@ -181,9 +228,8 @@
 
                     }
                     else{
-                        displayRes.push(e.target.value);
-                        display.value=displayRes.join('');
-                        console.log('I am happening right now')
+                        updateScreen(e)
+                        console.log('I am happening right now 1 ')
 
                     }
 
@@ -194,20 +240,14 @@
                     if(e.target.value =='.'){
                         console.log('no number before period after operand')
                         displayRes=['0'];
-                        displayRes.push(e.target.value);
-                        display.value=displayRes.join('')
+                        updateScreen(e)
 
                     }
                     else{
                         displayRes=[e.target.value]
                         display.value=displayRes.join('');
-
                         console.log(lastKey + ' i happened' + ' numb1 is ' + num1)
-
                     }
-
-
-
                 }
 
             }
@@ -215,37 +255,22 @@
                 if(displayRes[0]=='0'&& displayRes[1]!='.'){
                     if(e.target.value =='.'){
 
-                        displayRes.push(e.target.value);
-                        display.value=displayRes.join('');
+                        updateScreen(e)
+                        console.log('I am happening right now 2 ')
 
                     }
                     else{
+                        //this
                         displayRes[0]=(e.target.value)
                         display.value=displayRes.join('');
                         console.log('did this work?')
                     }
 
                 }
-                // else if(e.target.value =='.'){
-                //     if
-                // }
+
                 else{
                     if(e.target.value =='.'){
-                        if(displayRes.includes('.')){
-                            console.log('a second period was presed')
-                        }
-                        else if(displayRes.length <1 ){
-                            console.log('no number before period')
-                            displayRes.push('0');
-                            displayRes.push(e.target.value);
-                            display.value=displayRes.join('');
-                        }
-
-                        else{
-                            displayRes.push(e.target.value);
-                            display.value=displayRes.join('');
-                            console.log(display.value + " first period pressed")
-                        }
+                        periodPressed(e)
                     }
                     else if(e.target.id=='plusMinus'){
                         if(displayRes.includes('-')){
@@ -256,19 +281,11 @@
                             display.value=displayRes.join('');
 
                         }
-
-
-
                         console.log('plus and minus')
-
                     }
                     else{
-                        console.log(e.target.value)
-                        // display.value+=e.target.value
-                        displayRes.push(e.target.value)
-                        display.value=displayRes.join('');
-                        console.log(display.value + " display value")
-
+                        console.log('I am happening right now 3 ')
+                        updateScreen(e)
                     }
 
 
@@ -289,13 +306,15 @@
         let num1;
         let clear=false;
         let go='noGo';
-        // Complete percentage functions and usage. Implement a max number lenght (DONE Decide if I want to implement the +/- button) implement delete last number buttom| After all is done, MAKE CODE DRY
+        // Complete percentage functions and usage(DONE). Implement a max number lenght(done) (DONE Decide if I want to implement the +/- button) implement delete last number buttom| After all is done, MAKE CODE DRY
 
 
 
 
 
     </script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
 
 </body>
 </html>

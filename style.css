@@ -29,18 +29,33 @@ input{
     margin-bottom: 10px;
     font-size: 4rem;
     text-align: right;
+
 }
 .buttons{
     display: flex;
     flex-wrap: wrap;
 }
-.btn{
+.btn, i{
     width: 25%;
     padding: 20px;
     font-size: 1.5rem;
     border-radius: 3px;
     border:1px solid rgba(0, 0, 0, 0.466);
     background-color: #ffff8f;
+}
+.back-icon{
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+}
+#backSpace{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top:22px;
+}
+.back-icon{
+
+    padding:0
 }
 .btn:last-child{
     flex-grow: 2;
@@ -49,9 +64,9 @@ input{
     background-color:#ffff8fc2;
 
 }
-.operand, #c, #plusMinus{
+.operand, #c, #plusMinus, #percentage, #backSpace{
     background-color: #f96d6d;
 }
-.operand:focus, #c:focus{
+.operand:focus, #c:focus, #plusMinus:focus, #percentage:focus{
     background-color: #f96d6dcb;
 }
